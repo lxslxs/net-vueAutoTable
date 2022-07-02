@@ -1,0 +1,89 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <!-- import CSS -->
+    <link href="~/Content/ElementUI/element-ui.css" rel="stylesheet" />
+    <style>
+        table tr {
+            height: 60px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <el-table :data="tableData"
+                  stripe="true"
+                  style="width: 100%">
+            <el-table-column :prop="index"
+                             :label="item"
+                             v-for="(item, index) in tableHeader"
+                             :key="index">
+        </el-table>
+        <div style="padding: 24px;">
+            <el-input type="textarea"
+                      rows="4"
+                      autosize
+                      placeholder="请输入表头"
+                      v-model="textarea1">
+            </el-input>
+            <el-row style="padding: 24px;">
+                <el-button type="primary" @@click="autoDefault1">默认表头</el-button>
+                <el-button type="danger" plain @@click="setAuto1">生成表头</el-button>
+            </el-row>
+        </div>
+        <div style="padding: 24px;">
+            <el-input type="textarea"
+                      rows="4"
+                      autosize
+                      placeholder="请输入内容"
+                      v-model="textarea2">
+            </el-input>
+            <el-row style="padding: 24px;">
+                <el-button type="primary" @@click="autoDefault2">默认数据</el-button>
+                <el-button type="danger" plain @@click="setAuto2">生成数据</el-button>
+            </el-row>
+        </div>
+    </div>
+    <script src="~/Scripts/vue.js"></script>
+    <script src="~/Scripts/ElementUI/element-ui.js"></script>
+    <script>
+     new Vue({
+       el: '#app',
+       data: function() {
+           return {
+               textarea1: '{"name": "名称","todayBuy": "日购买","monthBuy": "月购买","totalBuy": "总共购买"}',
+               textarea2: '[{"name": "oppo","todayBuy": 500,"monthBuy": 3500,"totalBuy": 22000},{"name":"vivo","todayBuy": 300,"monthBuy": 2200,"totalBuy": 24000}]',
+               tableHeader: {
+                   name: "名称",
+                   todayBuy: "日购买",
+                   monthBuy: "月购买",
+                   totalBuy: "总共购买"
+               },
+               tableData: []
+           }
+       },
+       methods: {
+         handleChange(value) {
+           console.log(value);
+         },
+         autoDefault1() {
+             this.textarea1 = '{"name": "名称","todayBuy": "日购买","monthBuy": "月购买","totalBuy": "总共购买"}';
+         },
+         setAuto1() {
+             this.tableHeader = JSON.parse(this.textarea1);
+         },
+         autoDefault2() {
+             this.textarea2 = '[{"name": "oppo","todayBuy": 500,"monthBuy": 3500,"totalBuy": 22000},{"name":"vivo","todayBuy": 300,"monthBuy": 2200,"totalBuy": 24000}]';
+         },
+         setAuto2() {
+         this.tableData = JSON.parse(this.textarea2);
+        }
+       }
+     });
+    </script>
+</body>
+</html>
